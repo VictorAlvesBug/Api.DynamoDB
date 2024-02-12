@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Api.DynamoDB.Helpers\Api.DynamoDB.Helpers.csproj" />
+    <ProjectReference Include="..\Api.DynamoDB.Infrastructure\Api.DynamoDB.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
