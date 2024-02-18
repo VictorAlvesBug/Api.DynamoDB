@@ -12,7 +12,8 @@ namespace Api.DynamoDB.Helpers.Extensions
 			DateTimeZoneHandling = DateTimeZoneHandling.Unspecified,
 			Culture = CultureInfo.CurrentCulture,
 			DateFormatString = "yyyy-MM-dd",
-			DateParseHandling = DateParseHandling.None
+			DateParseHandling = DateParseHandling.None,
+			NullValueHandling = NullValueHandling.Ignore,
 		};
 
 		public static Document ToDocument<T>(this T obj) =>

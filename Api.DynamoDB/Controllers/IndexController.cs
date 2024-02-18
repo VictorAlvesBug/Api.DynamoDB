@@ -16,7 +16,7 @@ namespace Api.DynamoDB.Controllers
 			_service = service;
 		}
 
-		[HttpGet("/{tableName}/Indexes")]
+		/*[HttpGet("/{tableName}/Indexes")]
 		public async Task<IActionResult> Get(string tableName)
 		{
 			try
@@ -29,7 +29,7 @@ namespace Api.DynamoDB.Controllers
 			{
 				return BadRequest(new ApiResponse<object>(ex.Message));
 			}
-		}
+		}*/
 
 		/*[HttpGet("{tableName}/Indexes/")]
 		public async Task<IActionResult> Get(string tableName)
@@ -46,7 +46,7 @@ namespace Api.DynamoDB.Controllers
 			}
 		}*/
 
-		[HttpPost("{tableName}/Indexes/{indexName}")]
+		/*[HttpPost("{tableName}/Indexes/{indexName}")]
 		public async Task<IActionResult> Post(
 			string tableName, 
 			string indexName, 
@@ -86,6 +86,6 @@ namespace Api.DynamoDB.Controllers
 			{
 				return BadRequest(new ApiResponse<object>(ex.Message));
 			}
-		}
+		}*/
 	}
 }

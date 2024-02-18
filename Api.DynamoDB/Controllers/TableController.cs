@@ -15,7 +15,7 @@ namespace Api.DynamoDB.Controllers
 			_service = service;
 		}
 
-		[HttpGet]
+		/*[HttpGet]
 		public async Task<IActionResult> Get()
 		{
 			try
@@ -58,6 +58,6 @@ namespace Api.DynamoDB.Controllers
 			{
 				return BadRequest(new ApiResponse<object>(ex.Message));
 			}
-		}
+		}*/
 	}
 }

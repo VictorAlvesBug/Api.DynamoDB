@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
+using System.Runtime.InteropServices.ObjectiveC;
 
 namespace Api.DynamoDB.Helpers.Extensions
 {
@@ -34,5 +35,9 @@ namespace Api.DynamoDB.Helpers.Extensions
 
 			return JsonConvert.DeserializeObject<ObjectType>(current.ToString(), DefaultSettings);
 		}
+
+		public static List<string> GetListOfAttributeNames<ObjectType>() =>
+			typeof(ObjectType).GetProperties().Select(p => p.Name).ToList();
+
 	}
 }

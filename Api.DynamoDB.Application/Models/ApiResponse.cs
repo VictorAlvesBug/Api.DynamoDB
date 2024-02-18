@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 
 namespace Api.DynamoDB.Application.Models
 {
-	public class ApiResponse<T>
+	public class ApiResponse
 	{
 		public bool Success { get; set; }
-		public T Data { get; set; }
+		public dynamic Data { get; set; }
 		public string ErrorMessage { get; set; }
 
-		public ApiResponse(T data)
+		public ApiResponse()
+		{
+			Success = true;
+		}
+
+		public ApiResponse(dynamic data)
 		{
 			Success = true;
 			Data = data;
