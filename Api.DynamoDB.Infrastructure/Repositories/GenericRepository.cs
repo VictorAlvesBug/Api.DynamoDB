@@ -37,7 +37,7 @@ namespace Api.DynamoDB.Infrastructure.Repositories
 			new()
 			{
 				ReturnValues = ReturnValues.AllNewAttributes,
-				ConditionalExpression = new Amazon.DynamoDBv2.DocumentModel.Expression
+				ConditionalExpression = new Expression
 				{
 					ExpressionAttributeNames = GetKeysExpressionAttributeNames(PK, SK),
 					ExpressionAttributeValues = GetKeysExpressionAttributeValues(PK, SK),
@@ -53,7 +53,7 @@ namespace Api.DynamoDB.Infrastructure.Repositories
 			new()
 			{
 				ReturnValues = ReturnValues.AllNewAttributes,
-				ConditionalExpression = new Amazon.DynamoDBv2.DocumentModel.Expression
+				ConditionalExpression = new Expression
 				{
 					ExpressionAttributeNames = GetKeysExpressionAttributeNames(PK, SK),
 					ExpressionAttributeValues = GetKeysExpressionAttributeValues(PK, SK),
@@ -69,7 +69,7 @@ namespace Api.DynamoDB.Infrastructure.Repositories
 			new()
 			{
 				ReturnValues = ReturnValues.None,
-				ConditionalExpression = new Amazon.DynamoDBv2.DocumentModel.Expression
+				ConditionalExpression = new Expression
 				{
 					ExpressionAttributeNames = GetKeysExpressionAttributeNames(PK, SK),
 					ExpressionAttributeValues = GetKeysExpressionAttributeValues(PK, SK),

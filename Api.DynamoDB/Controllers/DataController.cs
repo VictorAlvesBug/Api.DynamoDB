@@ -1,15 +1,11 @@
-using Amazon.DynamoDBv2.Model;
+using Api.DynamoDB.Application.Models;
 using Api.DynamoDB.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection.Emit;
-using System.Reflection;
-using Api.DynamoDB.Application.Models.Indexes;
-using Api.DynamoDB.Application.Models;
 
 namespace Api.DynamoDB.Controllers
 {
 	[ApiController]
-	[Route("api/Tables")]
+	[Route("api/NoDB")]
 	public class DataController : ControllerBase
 	{
 		private readonly IDataService _service;
@@ -18,22 +14,20 @@ namespace Api.DynamoDB.Controllers
 			_service = service;
 		}
 
-		/*[HttpGet("/{tableName}/Data")]
+		[HttpGet($"/{{{nameof(tableName)}}}/Data")]
 		public async Task<IActionResult> Get(string tableName)
 		{
 			try
 			{
-				return Ok(new ApiResponse<IEnumerable<object>>(
-					await _service.GetAllAsync(tableName)
-				));
+				return Ok(new ApiResponse(await _service.GetAllAsync(tableName)));
 			}
 			catch (Exception ex)
 			{
-				return BadRequest(new ApiResponse<object>(ex.Message));
+				return BadRequest(new ApiResponse(ex.Message));
 			}
 		}
 
-		[HttpGet("/{tableName}/Data/{id}")]
+		/*[HttpGet("/{tableName}/Data/{id}")]
 		public async Task<IActionResult> Get(string tableName, string id)
 		{
 			try

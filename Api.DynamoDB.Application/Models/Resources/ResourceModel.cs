@@ -1,6 +1,4 @@
-﻿using Api.DynamoDB.Domain.Entities.Resources;
-
-namespace Api.DynamoDB.Application.Models.Resources
+﻿namespace Api.DynamoDB.Application.Models.Resources
 {
 	public class ResourceModel
 	{
@@ -11,6 +9,6 @@ namespace Api.DynamoDB.Application.Models.Resources
 		public bool UseUpdatingLog { get; set; }
 		public bool UseSoftDelete { get; set; }
 		public bool Active { get; set; }
-
+		public string Url { get; set; }
 	}
 }

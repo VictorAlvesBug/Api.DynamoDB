@@ -1,5 +1,4 @@
 ﻿using Amazon.DynamoDBv2.Model;
-using Api.DynamoDB.Application.Models;
 
 namespace Api.DynamoDB.Application.Services.Interfaces
 {

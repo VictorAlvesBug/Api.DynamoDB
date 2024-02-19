@@ -1,6 +1,3 @@
-using Amazon.DynamoDBv2.Model;
-using Api.DynamoDB.Application.Models;
-using Api.DynamoDB.Application.Models.Indexes;
 using Api.DynamoDB.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

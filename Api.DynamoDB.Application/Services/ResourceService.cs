@@ -12,14 +12,17 @@ namespace Api.DynamoDB.Application.Services
 	{
 		private readonly IRepository<ResourceEntity> _genericRepository;
 		private readonly IResourceRepository _resourceRepository;
+		private readonly ITableRepository _tableRepository;
 		private readonly string _fakeOwner;
 
 		public ResourceService(
 			IRepository<ResourceEntity> genericRepository,
-			IResourceRepository resourceRepository)
+			IResourceRepository resourceRepository,
+			ITableRepository tableRepository)
 		{
 			_genericRepository = genericRepository;
 			_resourceRepository = resourceRepository;
+			_tableRepository = tableRepository;
 			_fakeOwner = "victoralvesbug";
 		}
 
@@ -31,7 +34,11 @@ namespace Api.DynamoDB.Application.Services
 				Database.GetResourceSchemaPK(_fakeOwner), 
 				attributesToGet);
 
-			return resources.ConvertTo<ResourceItemToGetModel>();
+			var model = resources.ConvertTo<ResourceItemToGetModel>().ToList();
+			
+			model.ForEach(item => item.Url = Database.GetResourceApiUrl(_fakeOwner, item.Id));
+
+			return model;
 		}
 
 		public async Task<ResourceModel> GetAsync(string id)
@@ -40,7 +47,11 @@ namespace Api.DynamoDB.Application.Services
 					Database.GetResourceSchemaPK(_fakeOwner),
 					Database.GetResourceSchemaSK(id));
 
-			return entity.ConvertTo<ResourceModel>();
+			var model = entity.ConvertTo<ResourceModel>();
+
+			model.Url = Database.GetResourceApiUrl(model.Owner, model.Id);
+
+			return model;
 		}
 
 		public async Task<ResourceModel> CreateAsync(ResourceToCreateModel resource)
@@ -49,7 +60,14 @@ namespace Api.DynamoDB.Application.Services
 
 			await _genericRepository.CreateItemAsync(entity);
 
-			return entity.ConvertTo<ResourceModel>();
+			var tableName = Database.GetTableNodbName(entity.Owner, entity.Id);
+			await _tableRepository.CreateAsync(tableName, "Id", null);
+
+			var model = entity.ConvertTo<ResourceModel>();
+
+			model.Url = Database.GetResourceApiUrl(model.Owner, model.Id);
+
+			return model;
 		}
 
 		public async Task<ResourceModel> UpdateAsync(string id, ResourceToUpdateModel resource)
@@ -65,7 +83,11 @@ namespace Api.DynamoDB.Application.Services
 
 			await _genericRepository.UpdateWholeItemAsync(entity);
 
-			return entity.ConvertTo<ResourceModel>();
+			var model = entity.ConvertTo<ResourceModel>();
+
+			model.Url = Database.GetResourceApiUrl(model.Owner, model.Id);
+
+			return model;
 		}
 
 		public async Task DisableAsync(string id)

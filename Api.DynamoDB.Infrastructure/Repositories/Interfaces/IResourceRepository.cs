@@ -1,6 +1,4 @@
-﻿using Api.DynamoDB.Domain.Entities.Resources;
-
-namespace Api.DynamoDB.Infrastructure.Repositories.Interfaces
+﻿namespace Api.DynamoDB.Infrastructure.Repositories.Interfaces
 {
 	public interface IResourceRepository
 	{

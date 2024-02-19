@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Api.DynamoDB.Helpers.Extensions
+﻿namespace Api.DynamoDB.Helpers.Extensions
 {
 	public static class EnumerableExtensions
 	{

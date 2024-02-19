@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
-using System.Runtime.InteropServices.ObjectiveC;
 
 namespace Api.DynamoDB.Helpers.Extensions
 {

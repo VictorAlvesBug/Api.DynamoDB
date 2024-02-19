@@ -1,5 +1,4 @@
-﻿using Amazon.Auth.AccessControlPolicy;
-using Api.DynamoDB.Domain.Database;
+﻿using Api.DynamoDB.Domain.Database;
 using Api.DynamoDB.Domain.Entities.Resources;
 using Api.DynamoDB.Helpers.Extensions;
 

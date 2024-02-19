@@ -1,6 +1,4 @@
-﻿using Amazon.DynamoDBv2.DocumentModel;
-using Amazon.DynamoDBv2.Model;
-using Api.DynamoDB.Domain.Entities;
+﻿using Amazon.DynamoDBv2.Model;
 using Api.DynamoDB.Infrastructure.Repositories.Interfaces;
 using Api.DynamoDB.Infrastructure.Utils;
 
@@ -36,7 +34,10 @@ namespace Api.DynamoDB.Infrastructure.Repositories
 			return response?.Table;
 		}
 
-		public async Task<TableDescription> CreateAsync(string tableName)
+		public async Task<TableDescription> CreateAsync(
+			string tableName, 
+			string pkName = "PK", 
+			string skName = "SK")
 		{
 			var client = DynamoUtils.GetClient();
 
@@ -47,25 +48,15 @@ namespace Api.DynamoDB.Infrastructure.Repositories
 				{
 					new KeySchemaElement
 					{
-						AttributeName = "PK",
+						AttributeName = pkName,
 						KeyType = "HASH"
-					},
-					new KeySchemaElement
-					{
-						AttributeName = "SK",
-						KeyType = "RANGE"
 					}
 				},
 				AttributeDefinitions = new List<AttributeDefinition>
 				{
 					new AttributeDefinition
 					{
-						AttributeName = "PK",
-						AttributeType = "S"
-					},
-					new AttributeDefinition
-					{
-						AttributeName = "SK",
+						AttributeName = pkName,
 						AttributeType = "S"
 					}
 				},
@@ -75,6 +66,23 @@ namespace Api.DynamoDB.Infrastructure.Repositories
 					WriteCapacityUnits = 5
 				}
 			};
+
+			if (!string.IsNullOrEmpty(skName))
+			{
+				request.KeySchema
+					.Add(new KeySchemaElement
+					{
+						AttributeName = skName,
+						KeyType = "RANGE"
+					});
+
+				request.AttributeDefinitions
+					.Add(new AttributeDefinition
+					{
+						AttributeName = skName,
+						AttributeType = "S"
+					});
+			}
 
 			var response = await client.CreateTableAsync(request);
 

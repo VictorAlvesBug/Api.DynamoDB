@@ -7,5 +7,6 @@
 		public bool UseUpdatingLog { get; set; }
 		public bool UseSoftDelete { get; set; }
 		public bool Active { get; set; }
+		public string Url { get; set; }
 	}
 }

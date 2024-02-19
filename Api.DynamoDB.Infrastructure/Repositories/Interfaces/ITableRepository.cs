@@ -6,6 +6,9 @@ namespace Api.DynamoDB.Infrastructure.Repositories.Interfaces
 	{
 		Task<IEnumerable<string>> GetAllAsync();
 		Task<TableDescription> DescribeAsync(string tableName);
-		Task<TableDescription> CreateAsync(string tableName);
+		Task<TableDescription> CreateAsync(
+			string tableName,
+			string pkName = "PK",
+			string skName = "SK");
 	}
 }
