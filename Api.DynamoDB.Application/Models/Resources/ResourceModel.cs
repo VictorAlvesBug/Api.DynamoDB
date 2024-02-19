@@ -1,4 +1,6 @@
-﻿namespace Api.DynamoDB.Application.Models.Resources
+﻿using Api.DynamoDB.Application.Models.Attributes;
+
+namespace Api.DynamoDB.Application.Models.Resources
 {
 	public class ResourceModel
 	{

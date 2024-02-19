@@ -1,6 +1,6 @@
 ﻿using Api.DynamoDB.Domain.Enums;
 
-namespace Api.DynamoDB.Application.Models.Resources
+namespace Api.DynamoDB.Application.Models.Attributes
 {
 	public class AttributeModel
 	{

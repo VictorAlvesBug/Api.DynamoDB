@@ -14,7 +14,7 @@ namespace Api.DynamoDB.Controllers
 			_service = service;
 		}
 
-		[HttpGet($"/{{{nameof(tableName)}}}/Data")]
+		[HttpGet($"{{{nameof(tableName)}}}/Data")]
 		public async Task<IActionResult> Get(string tableName)
 		{
 			try

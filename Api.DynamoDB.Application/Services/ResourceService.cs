@@ -1,4 +1,5 @@
 ﻿using Amazon.DynamoDBv2.Model;
+using Api.DynamoDB.Application.Models.Attributes;
 using Api.DynamoDB.Application.Models.Resources;
 using Api.DynamoDB.Application.Services.Interfaces;
 using Api.DynamoDB.Domain.Database;
@@ -31,11 +32,13 @@ namespace Api.DynamoDB.Application.Services
 			var attributesToGet = ObjectExtensions.GetListOfAttributeNames<ResourceItemToGetModel>();
 
 			var resources = await _genericRepository.GetAsync(
-				Database.GetResourceSchemaPK(_fakeOwner), 
+				Database.GetResourceSchemaPK(_fakeOwner),
 				attributesToGet);
 
+			if (!resources.SafeAny()) throw new Exception("Recursos não encontrados");
+
 			var model = resources.ConvertTo<ResourceItemToGetModel>().ToList();
-			
+
 			model.ForEach(item => item.Url = Database.GetResourceApiUrl(_fakeOwner, item.Id));
 
 			return model;
@@ -46,6 +49,8 @@ namespace Api.DynamoDB.Application.Services
 			var entity = await _genericRepository.GetSingleAsync(
 					Database.GetResourceSchemaPK(_fakeOwner),
 					Database.GetResourceSchemaSK(id));
+
+			if (entity == null) throw new Exception("Recurso não encontrado");
 
 			var model = entity.ConvertTo<ResourceModel>();
 
@@ -76,7 +81,7 @@ namespace Api.DynamoDB.Application.Services
 
 			var previewEntity = await _genericRepository.GetSingleAsync(entity.PK, entity.SK);
 
-			if (previewEntity == null) 
+			if (previewEntity == null)
 				throw new ConditionalCheckFailedException("The conditional request failed");
 
 			entity = previewEntity.MergeWith(entity);
@@ -96,6 +101,48 @@ namespace Api.DynamoDB.Application.Services
 			var sk = Database.GetResourceSchemaSK(id);
 
 			await _resourceRepository.DisableAsync(pk, sk);
+		}
+
+		public async Task<IEnumerable<AttributeModel>> GetAttributesAsync(string resourceId)
+		{
+			var entity = await _genericRepository.GetSingleAsync(
+					Database.GetResourceSchemaPK(_fakeOwner),
+					Database.GetResourceSchemaSK(resourceId));
+
+			if (entity == null) throw new Exception("Recurso não encontrado");
+
+			var model = entity.AttributesList.ConvertTo<AttributeModel>();
+
+			return model;
+		}
+
+		public async Task<AttributeModel> CreateAttributeAsync(
+			string resourceId,
+			AttributeToCreateModel attribute)
+		{
+			var resourceEntity = await _genericRepository.GetSingleAsync(
+				Database.GetResourceSchemaPK(_fakeOwner),
+				Database.GetResourceSchemaSK(resourceId));
+
+			if (resourceEntity == null)
+				throw new ConditionalCheckFailedException("Recurso não encontrado");
+
+			var attributeEntity = attribute.ConvertTo<AttributeEntity>();
+
+			resourceEntity.AttributesList ??= new List<AttributeEntity>();
+
+			if (resourceEntity.AttributesList.Any(attr => attr.Name == attribute.Name))
+				throw new Exception($"Já existe um atributo com Name '{attribute.Name}'");
+
+			resourceEntity.AttributesList.Add(attributeEntity);
+
+			await _genericRepository.UpdateWholeItemAsync(resourceEntity);
+
+			var model = resourceEntity.ConvertTo<ResourceModel>();
+
+			model.Url = Database.GetResourceApiUrl(model.Owner, model.Id);
+
+			return attributeEntity.ConvertTo<AttributeModel>();
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using Api.DynamoDB.Application.Models.Resources;
+﻿using Api.DynamoDB.Application.Models.Attributes;
+using Api.DynamoDB.Application.Models.Resources;
 
 namespace Api.DynamoDB.Application.Services.Interfaces
 {
@@ -9,5 +10,7 @@ namespace Api.DynamoDB.Application.Services.Interfaces
 		Task<ResourceModel> CreateAsync(ResourceToCreateModel resource);
 		Task<ResourceModel> UpdateAsync(string id, ResourceToUpdateModel resource);
 		Task DisableAsync(string id);
+		Task<IEnumerable<AttributeModel>> GetAttributesAsync(string resourceId);
+		Task<AttributeModel> CreateAttributeAsync(string resourceId, AttributeToCreateModel attribute);
 	}
 }
