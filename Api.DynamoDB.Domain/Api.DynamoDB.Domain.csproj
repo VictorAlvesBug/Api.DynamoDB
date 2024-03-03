@@ -8,4 +8,8 @@
 		<WarningsAsErrors>IDE0059</WarningsAsErrors>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Api.DynamoDB.Helpers\Api.DynamoDB.Helpers.csproj" />
+	</ItemGroup>
+
 </Project>

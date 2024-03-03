@@ -55,6 +55,7 @@ namespace Api.DynamoDB.Controllers
 		{
 			try
 			{
+				payload.Validate();
 				return Ok(new ApiResponse(await _service.CreateAsync(payload)));
 			}
 			catch (ConditionalCheckFailedException ex)

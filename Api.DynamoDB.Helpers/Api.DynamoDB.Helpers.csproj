@@ -13,8 +13,4 @@
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\Api.DynamoDB.Domain\Api.DynamoDB.Domain.csproj" />
-	</ItemGroup>
-
 </Project>
